@@ -1,0 +1,54 @@
+{
+  "name": "modinstaller",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "modinstaller",
+  "author": "nooney <hyperblast@protonmail.ch>",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "cleanup": "modclean -n default:safe"
+  },
+  "build": {
+    "appId": "com.nooney.modinstaller",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest",
+    "modclean": "^3.0.0-beta.1"
+  },
+  "dependencies": {
+    "fs-extra": "^9.1.0",
+    "got": "^11.8.2",
+    "mv": "^2.1.1",
+    "request": "^2.88.2",
+    "unzipper": "^0.10.11"
+  }
+}

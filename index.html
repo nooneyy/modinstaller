@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>modinstaller</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/25779da5bc.js" crossorigin="anonymous"></script>
+    <style>
+        html,
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-y: hidden;
+        }
+        body > footer {
+            margin-top: auto;
+        }
+        .unselectable {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        .progress::-webkit-progress-value {
+          transition: width 0.5s ease;
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <!---<img src="https://i.imgur.com/qOAF7FB.png"> -->
+            <img src="https://i.imgur.com/GSNot7Q.png">
+          </a>
+      
+        </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <button class="button is-success" id="system">
+                    <span>System: </span>
+                    <span class="icon is-small">
+                        <i class="fas fa-check" id="systemstatus"></i>
+                      </span>
+                  </button>
+                  <button class="button is-success" id="minecraft">
+                    <span>Minecraft: </span>
+                    <span class="icon is-small">
+                        <i class="fas fa-check" id="minecraftstatus"></i>
+                      </span>
+                  </button>
+                  <button class="button is-success" id="forge">
+                    <span>Forge: </span>
+                    <span class="icon is-small">
+                        <i class="fas fa-check" id="forgestatus"></i>
+                      </span>
+                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <section class="hero is-medium is-dark" style="background-image: url('https://i.redd.it/m90qe2jknp351.png'); background-position: center;">
+        <div class="hero-body">
+          <p class="title unselectable" id="version">
+            big-floppa (v1.0)
+          </p>
+          <p class="subtitle unselectable">
+            Version: 1.16.5, 30 mods
+          </p>
+          <button class="button is-link is-rounded" id="modbutton">Install</button>
+        </div>
+      </section>
+      <footer class="footer">
+        <progress class="progress is-info" value="0" max="100" id="progress"></progress>
+        <div class="content has-text-centered unselectable">
+          <p>
+            <strong>modinstaller</strong> by <a href="https://github.com/nooneyy">nooney</a>. The source code is licensed as
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+          </p>
+        </div>
+      </footer>
+  </body>
+</html>
