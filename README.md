@@ -1,2 +1,2 @@
 # modinstaller
-Installer of big-floppa modpack
+minecraft mod installer written in electronJS
