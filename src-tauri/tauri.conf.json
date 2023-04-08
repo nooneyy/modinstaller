@@ -12,24 +12,22 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
       "os": {
         "all": true
       },
       "fs": {
         "exists": true,
         "scope": [
-          "$APPDATA/.minecraft/versions/*"
+          "$DATA/.minecraft/**"
         ]
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Utility",
       "copyright": "",
       "deb": {
         "depends": []
