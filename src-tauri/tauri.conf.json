@@ -19,7 +19,8 @@
         "exists": true,
         "writeFile": true,
         "scope": [
-          "$DATA/.minecraft/**"
+          "$DATA/.minecraft/**",
+          "$DESKTOP/**"
         ]
       },
       "path": {

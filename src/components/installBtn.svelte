@@ -1,5 +1,5 @@
 <script lang="ts">
-    let installMsg: string = undefined
+    let installMsg: string;
 </script>
 
 <main>
