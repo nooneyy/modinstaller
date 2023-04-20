@@ -7,7 +7,7 @@ import {
   writeTextFile,
   writeBinaryFile,
 } from "@tauri-apps/api/fs";
-import modpack from "./modpack.json";
+import modpack from "../modpack.json";
 export const osType: string = await type();
 export let versionExists: boolean = false;
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { osType, versionExists } from "../prerequisites";
+  import { osType, versionExists } from "../scripts/prerequisites";
   const platform: string =
     osType === "Windows_NT" ? "Windows" : String({ osType });
 </script>
