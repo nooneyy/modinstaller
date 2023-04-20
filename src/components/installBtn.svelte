@@ -1,7 +1,5 @@
 <script lang="ts">
-    let installMsg: string;
+  let installMsg: string;
 </script>
 
-<main>
-    
-</main>
+<main />
