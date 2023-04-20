@@ -5,11 +5,7 @@
   import Footer from "./components/footer.svelte";
 </script>
 
-<head>
-  <script
-    src="https://kit.fontawesome.com/0a3fea4a81.js"
-    crossorigin="anonymous"></script>
-</head>
+<head />
 <main
   class="flex-col flex h-screen subpixel-antialiased select-none"
   class:dark={$dark === "dark"}>
