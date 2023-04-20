@@ -7,6 +7,7 @@ import {
   writeTextFile,
   writeBinaryFile,
 } from "@tauri-apps/api/fs";
+import { handleErr } from "./errorHandling";
 import modpack from "../modpack.json";
 export const osType: string = await type();
 export let versionExists: boolean = false;
@@ -19,7 +20,7 @@ const versionPath: string = await join(
 
 await exists(versionPath, { dir: BaseDirectory.Data })
   .then(res => (versionExists = res))
-  .catch(e => console.error("Unable to check minecraft version:", e));
+  .catch(e => handleErr("Unable to check minecraft version:" + e));
 
 const legacyPath: string = await join(
   ".minecraft",
@@ -40,7 +41,7 @@ const getLegacyJSON = async () => {
             dir: BaseDirectory.Data,
           })
       )
-      .catch(e => console.error("Unable to fetch asset legacy.json:", e));
+      .catch(e => handleErr("Unable to fetch asset legacy.json:" + e));
   }
 };
 
