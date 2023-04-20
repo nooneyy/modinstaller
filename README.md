@@ -8,4 +8,4 @@ This app is in no way affiliated with Mojang, Minecraft or Microsoft.
 
 ## License
 
-This app is distributed under the CC-BY / MIT license.
+This app is distributed under the MIT license.
