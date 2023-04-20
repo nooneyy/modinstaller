@@ -1,7 +1,11 @@
-# Tauri + Svelte + Typescript
+# modinstaller
 
-This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
+A simple installer for Minecraft modpacks.
 
-## Recommended IDE Setup
+## Disclaimer
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+This app is in no way affiliated with Mojang, Minecraft or Microsoft.
+
+## License
+
+This app is distributed under the CC-BY / MIT license.
