@@ -1,7 +1,6 @@
 <script lang="ts">
   import modpack from "../modpack.json";
-  import { errorArray, handleErr } from "../scripts/errorHandling";
-  let count = 1;
+  import { errorArray } from "../scripts/errorHandling";
 </script>
 
 <div
