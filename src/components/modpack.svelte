@@ -4,7 +4,7 @@
 </script>
 
 <div
-  class="bg-[url(image.webp)] bg-cover grow flex items-center relative overflow-hidden">
+  class="bg-[url(../background.webp)] bg-cover grow flex items-center relative overflow-hidden">
   <div
     class="ml-4 outline outline-white rounded-lg p-4 backdrop-blur-md bg-gray-500 dark:bg-black bg-opacity-30 dark:bg-opacity-30 transition-all">
     <h1 class="text-white text-5xl underline font-bold tracking-tight">
