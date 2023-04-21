@@ -20,7 +20,7 @@ const versionPath: string = await join(
 
 await exists(versionPath, { dir: BaseDirectory.Data })
   .then(res => (versionExists = res))
-  .catch(e => handleErr("Unable to check minecraft version:" + e));
+  .catch(e => handleErr("Unable to check minecraft version:", e));
 
 const legacyPath: string = await join(
   ".minecraft",
@@ -41,7 +41,7 @@ const getLegacyJSON = async () => {
             dir: BaseDirectory.Data,
           })
       )
-      .catch(e => handleErr("Unable to fetch asset legacy.json:" + e));
+      .catch(e => handleErr("Unable to fetch legacy.json:", e));
   }
 };
 
@@ -49,25 +49,27 @@ const downloadForgeCLIUtil = async () => {
   await fetch(
     "https://api.github.com/repos/3arthqu4ke/ForgeCLI/releases/latest",
     { method: "GET" }
-  ).then(async (r: any) => {
-    for (const asset of r.data.assets) {
-      if (asset.name.endsWith("-all.jar")) {
-        await fetch(
-          "https://api.github.com/repos/3arthqu4ke/ForgeCLI/releases/assets/" +
-            asset.id,
-          {
-            method: "GET",
-            headers: { Accept: "application/octet-stream" },
-            responseType: ResponseType.Binary,
-          }
-        ).then(
-          async (r: any) =>
-            await writeBinaryFile(asset.name, r.data, {
-              dir: BaseDirectory.Desktop,
-            })
-        );
-        break;
+  )
+    .then(async (r: any) => {
+      for (const asset of r.data.assets) {
+        if (asset.name.endsWith("-all.jar")) {
+          await fetch(
+            "https://api.github.com/repos/3arthqu4ke/ForgeCLI/releases/assets/" +
+              asset.id,
+            {
+              method: "GET",
+              headers: { Accept: "application/octet-stream" },
+              responseType: ResponseType.Binary,
+            }
+          ).then(
+            async (r: any) =>
+              await writeBinaryFile(asset.name, r.data, {
+                dir: BaseDirectory.Desktop,
+              })
+          );
+          break;
+        }
       }
-    }
-  });
+    })
+    .catch(e => handleErr("Unable to fetch ForgeCLI:", e));
 };
