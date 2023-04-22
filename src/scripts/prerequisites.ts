@@ -9,7 +9,11 @@ import {
 } from "@tauri-apps/api/fs";
 import { handleErr } from "./errorHandling";
 import modpack from "../modpack.json";
-export const osType: string = await type();
+
+export const osType: string = await type().catch(e => {
+  handleErr("Failed to get OS type: ", e);
+  return "";
+});
 export let versionExists: boolean = false;
 
 const versionPath: string = await join(
