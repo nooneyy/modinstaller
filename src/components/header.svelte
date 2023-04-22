@@ -11,7 +11,7 @@
   }
   const componentsData: Component[] = [
     { type: "Minecraft", condition: versionExists },
-    { type: "Platform", condition: platform === "Windows", platform: platform },
+    { type: "Platform", condition: platform === "Windows", platform },
     { type: "Forge", condition: forgeExists },
   ];
 </script>
