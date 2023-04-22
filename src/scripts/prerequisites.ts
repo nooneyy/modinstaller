@@ -55,24 +55,26 @@ const downloadForgeCLIUtil = async () => {
     { method: "GET" }
   )
     .then(async (r: any) => {
-      for (const asset of r.data.assets) {
-        if (asset.name.endsWith("-all.jar")) {
-          await fetch(
-            "https://api.github.com/repos/3arthqu4ke/ForgeCLI/releases/assets/" +
-              asset.id,
-            {
-              method: "GET",
-              headers: { Accept: "application/octet-stream" },
-              responseType: ResponseType.Binary,
-            }
-          ).then(
-            async (r: any) =>
-              await writeBinaryFile(asset.name, r.data, {
-                dir: BaseDirectory.Desktop,
-              })
-          );
-          break;
-        }
+      const asset = r.data.assets.find((asset: any) =>
+        asset.name.endsWith("-all.jar")
+      );
+      if (asset) {
+        await fetch(
+          "https://api.github.com/repos/3arthqu4ke/ForgeCLI/releases/assets/" +
+            asset.id,
+          {
+            method: "GET",
+            headers: { Accept: "application/octet-stream" },
+            responseType: ResponseType.Binary,
+          }
+        ).then(
+          async (r: any) =>
+            await writeBinaryFile(asset.name, r.data, {
+              dir: BaseDirectory.Desktop,
+            })
+        );
+      } else {
+        handleErr("No ForgeCLI asset found!");
       }
     })
     .catch(e => handleErr("Unable to fetch ForgeCLI:", e));
