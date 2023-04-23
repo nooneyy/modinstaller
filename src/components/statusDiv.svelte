@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="py-2 m-2 border-2 rounded-lg {type === 'Minecraft'
+  class="py-2 m-2 border-2 rounded-lg text-white {type === 'Minecraft'
     ? 'ml-auto px-3'
     : 'px-4'} flex items-center {condition
     ? trueBg

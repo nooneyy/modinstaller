@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export let errorArray = writable([""]);
+export let errorArray = writable<string[]>([]);
 export const handleErr = (message: string, err?: string) => {
   const errString: string = `[${new Date().toLocaleTimeString()}] ${message}${
     err ? ` ${err}` : ""

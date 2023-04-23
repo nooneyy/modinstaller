@@ -1,6 +1,7 @@
 <script lang="ts">
   import modpack from "../modpack.json";
   import { errorArray } from "../scripts/errorHandling";
+  import Alert from "../svg/alert.svelte";
 </script>
 
 <div
@@ -19,11 +20,22 @@
       class="mt-3 px-5 py-2 rounded-lg bg-red-500 hover:bg-lime-500 transition-colors text-white"
       >Install</button>
   </div>
-  {#if $errorArray.length > 1}
+  {#if $errorArray.length > 0}
     <div
-      class="absolute top-0 left-0 w-full h-10 bg-red-500 text-white flex justify-center items-center space-x-5">
-      {#each $errorArray as error}
-        <div>{error}</div>
+      class="absolute bottom-0 left-0 w-full overflow-y-auto max-h-24 p-2 bg-red-500 dark:bg-red-600 text-white flex flex-col divide-y">
+      <div
+        class="p-2 select-textt ext-lg font-bold flex items-center justify-center space-x-1">
+        <Alert />
+        <p>
+          {$errorArray.length > 1
+            ? `${$errorArray.length} Errors were thrown:`
+            : `${$errorArray.length} Error was thrown:`}
+        </p>
+      </div>
+      {#each $errorArray as error, index (index)}
+        <div class="px-2 py-3 select-text text-center truncate-x">
+          {error}
+        </div>
       {/each}
     </div>
   {/if}
