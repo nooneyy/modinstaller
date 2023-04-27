@@ -1,4 +1,5 @@
-import { join } from "@tauri-apps/api/path";
+import { writable } from "svelte/store";
+import { join, dataDir } from "@tauri-apps/api/path";
 import { type } from "@tauri-apps/api/os";
 import { fetch, ResponseType } from "@tauri-apps/api/http";
 import {
@@ -7,24 +8,40 @@ import {
   writeTextFile,
   writeBinaryFile,
 } from "@tauri-apps/api/fs";
+import { open } from "@tauri-apps/api/dialog";
 import { handleErr } from "./errorHandling";
-import modpack from "../modpack.json";
 
 export const osType: string = await type().catch(e => {
   handleErr("Failed to get OS type: ", e);
   return "";
 });
-export let versionExists: boolean = false;
+export let minecraftExists = writable<boolean>(false);
 
-const versionPath: string = await join(
+const defaultMinecraftPath: string = await join(
   ".minecraft",
-  "versions",
-  modpack.version
+  "launcher_profiles.json"
 );
 
-await exists(versionPath, { dir: BaseDirectory.Data })
-  .then(res => (versionExists = res))
-  .catch(e => handleErr("Unable to check minecraft version:", e));
+await exists(defaultMinecraftPath, { dir: BaseDirectory.Data })
+  .then(res => {
+    minecraftExists.update(v => (v = res));
+  })
+  .catch(e => handleErr("Error checking Minecraft path:", e));
+
+export const changeMinecraftPath = async () => {
+  let path = (await open({
+    defaultPath: await dataDir(),
+    directory: true,
+    multiple: false,
+    recursive: true,
+  })) as string;
+  if (path) {
+    path = await join(path, "launcher_profiles.json");
+    await exists(path)
+      .then(res => minecraftExists.set(res))
+      .catch(e => handleErr("Error checking Minecraft path", e));
+  }
+};
 
 const legacyPath: string = await join(
   ".minecraft",

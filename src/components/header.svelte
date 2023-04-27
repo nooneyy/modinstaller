@@ -1,19 +1,5 @@
 <script lang="ts">
-  import { osType, versionExists } from "../scripts/prerequisites";
   import StatusDiv from "./statusDiv.svelte";
-  const platform: string = osType === "Windows_NT" ? "Windows" : osType;
-  //test value for now
-  const forgeExists = false;
-  interface Component {
-    type: string;
-    condition: boolean;
-    platform?: string;
-  }
-  const componentsData: Component[] = [
-    { type: "Minecraft", condition: versionExists },
-    { type: "Platform", condition: platform === "Windows", platform },
-    { type: "Forge", condition: forgeExists },
-  ];
 </script>
 
 <div
@@ -27,7 +13,5 @@
     <div
       class="opacity-0 group-hover:opacity-100 transition-opacity inset-0 absolute bg-gradient-to-r from-teal-400 to-blue-400 h-full w-full rounded-md" />
   </div>
-  {#each componentsData as c (c.type)}
-    <StatusDiv {...c} />
-  {/each}
+  <StatusDiv />
 </div>
