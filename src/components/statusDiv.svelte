@@ -7,7 +7,7 @@
     changeMinecraftPath,
     osType,
     minecraftExists,
-  } from "../scripts/prerequisites";
+  } from "../utils/prerequisites";
   const platform: string = osType === "Windows_NT" ? "Windows" : osType;
   const forgeExists: boolean = false;
 
@@ -15,10 +15,11 @@
     type: string;
     condition?: boolean;
     platform?: string;
+    hoverText?: string;
   }
 
   const componentsData: Component[] = [
-    { type: "Minecraft" },
+    { type: "Minecraft", hoverText: "Change Path" },
     { type: "Platform", condition: platform === "Windows", platform },
     { type: "Forge", condition: forgeExists },
   ];
@@ -31,8 +32,9 @@
 </script>
 
 {#each componentsData as c (c.type)}
-  <button
-    class="py-2 m-2 border-2 rounded-lg text-white flex items-center {c.type ===
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div
+    class="relative group py-2 m-2 border-2 rounded-lg text-white flex items-center {c.type ===
     'Minecraft'
       ? 'ml-auto px-3'
       : 'px-4'} {(c.type === 'Minecraft' ? $minecraftExists : c.condition)
@@ -50,5 +52,13 @@
         : c.type === "Forge"
         ? Qmark
         : Xmark} />
-  </button>
+    {#if c.hoverText}
+      <button
+        class="bg-opacity-0 group-hover:bg-opacity-60 transition-colors inset-0 absolute bg-black h-full w-full rounded-md">
+        <p class="opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+          {c.hoverText}
+        </p>
+      </button>
+    {/if}
+  </div>
 {/each}

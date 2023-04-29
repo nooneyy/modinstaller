@@ -1,6 +1,6 @@
 <script lang="ts">
   import modpack from "../modpack.json";
-  import { errorArray } from "../scripts/errorHandling";
+  import { errorArray } from "../utils/errorHandling";
   import Alert from "../svg/alert.svelte";
 </script>
 
