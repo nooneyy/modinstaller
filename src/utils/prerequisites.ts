@@ -8,14 +8,13 @@ import {
   writeTextFile,
   writeBinaryFile,
 } from "@tauri-apps/api/fs";
-import { open } from "@tauri-apps/api/dialog";
 import { handleErr } from "./errorHandling";
 
 export const osType: string = await type().catch(e => {
   handleErr("Failed to get OS type: ", e);
   return "";
 });
-export let minecraftExists = writable<boolean>(false);
+export let minecraftPath = writable<string>("");
 
 const defaultMinecraftPath: string = await join(
   ".minecraft",
@@ -23,47 +22,35 @@ const defaultMinecraftPath: string = await join(
 );
 
 await exists(defaultMinecraftPath, { dir: BaseDirectory.Data })
-  .then(res => {
-    minecraftExists.update(v => (v = res));
+  .then(async res => {
+    if (res) {
+      const path = await join(await dataDir(), ".minecraft");
+      minecraftPath.update(p => (p = path));
+    }
   })
   .catch(e => handleErr("Error checking Minecraft path:", e));
 
-export const changeMinecraftPath = async () => {
-  let path = (await open({
-    defaultPath: await dataDir(),
-    directory: true,
-    multiple: false,
-    recursive: true,
-  })) as string;
-  if (path) {
-    path = await join(path, "launcher_profiles.json");
-    await exists(path)
-      .then(res => minecraftExists.set(res))
-      .catch(e => handleErr("Error checking Minecraft path", e));
-  }
-};
-
-const legacyPath: string = await join(
-  ".minecraft",
-  "assets",
-  "indexes",
-  "legacy.json"
-);
-
 const getLegacyJSON = async () => {
-  if (!(await exists(legacyPath, { dir: BaseDirectory.Data }))) {
+  let mcPath: string = "";
+  const mcPathUnsubscribe = minecraftPath.subscribe(v => (mcPath = v));
+  const legacyPath: string = await join(
+    mcPath,
+    "assets",
+    "indexes",
+    "legacy.json"
+  );
+  if (!(await exists(legacyPath))) {
     await fetch(
       "https://web.archive.org/web/20140911064532/https://s3.amazonaws.com/Minecraft.Download/indexes/legacy.json",
       { method: "GET" }
     )
       .then(
         async res =>
-          await writeTextFile(legacyPath, JSON.stringify(res.data, null, 2), {
-            dir: BaseDirectory.Data,
-          })
+          await writeTextFile(legacyPath, JSON.stringify(res.data, null, 2), {})
       )
       .catch(e => handleErr("Unable to fetch legacy.json:", e));
   }
+  mcPathUnsubscribe();
 };
 
 const downloadForgeCLIUtil = async () => {

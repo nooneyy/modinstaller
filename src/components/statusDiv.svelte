@@ -3,11 +3,9 @@
   import Xmark from "../svg/xmark.svelte";
   import Qmark from "../svg/qmark.svelte";
 
-  import {
-    changeMinecraftPath,
-    osType,
-    minecraftExists,
-  } from "../utils/prerequisites";
+  import { osType, minecraftPath } from "../utils/prerequisites";
+  import { changeMinecraftPath } from "../utils/changeMcPath";
+
   const platform: string = osType === "Windows_NT" ? "Windows" : osType;
   const forgeExists: boolean = false;
 
@@ -37,7 +35,7 @@
     class="relative group py-2 m-2 border-2 rounded-lg text-white flex items-center {c.type ===
     'Minecraft'
       ? 'ml-auto px-3'
-      : 'px-4'} {(c.type === 'Minecraft' ? $minecraftExists : c.condition)
+      : 'px-4'} {(c.type === 'Minecraft' ? $minecraftPath !== '' : c.condition)
       ? background.true
       : c.type === 'Forge'
       ? background.forgeFalse
@@ -47,7 +45,7 @@
       {c.platform ? `${c.type}: ${platform}` : `${c.type}: `}
     </p>
     <svelte:component
-      this={(c.type === "Minecraft" ? $minecraftExists : c.condition)
+      this={(c.type === "Minecraft" ? $minecraftPath !== "" : c.condition)
         ? Check
         : c.type === "Forge"
         ? Qmark
