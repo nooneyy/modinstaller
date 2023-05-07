@@ -3,33 +3,38 @@
   import Xmark from "../svg/xmark.svelte";
   import Qmark from "../svg/qmark.svelte";
 
-  import { osType, minecraftPath } from "../utils/prerequisites";
+  import { osType, minecraftPath, forgeExists } from "../utils/prerequisites";
   import { changeMinecraftPath } from "../utils/changeMcPath";
+  import { derived, type Readable } from "svelte/store";
 
   const platform: string = osType === "Windows_NT" ? "Windows" : osType;
-  const forgeExists: boolean = false;
 
-  interface Component {
-    type: string;
-    condition?: boolean;
-    platform?: string;
-    hoverText?: string;
-  }
-
-  const componentsData: Component[] = [
-    { type: "Minecraft", hoverText: "Change Path" },
+  const componentsData: Readable<
+    {
+      type: string;
+      hoverText?: string;
+      condition?: boolean;
+      platform?: string;
+    }[]
+  > = derived(forgeExists, $forgeExists => [
+    {
+      type: "Minecraft",
+      hoverText: "Change Path",
+    },
     { type: "Platform", condition: platform === "Windows", platform },
-    { type: "Forge", condition: forgeExists },
-  ];
+    { type: "Forge", condition: $forgeExists },
+  ]);
 
   const background = {
     true: "dark:bg-green-600 bg-green-500",
     false: "dark:bg-red-600 bg-red-500",
     forgeFalse: "dark:bg-zinc-600 bg-zinc-500",
   };
+
+  $: console.log($minecraftPath);
 </script>
 
-{#each componentsData as c (c.type)}
+{#each $componentsData as c (c.type)}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     class="relative group py-2 m-2 border-2 rounded-lg text-white flex items-center {c.type ===
