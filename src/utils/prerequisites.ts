@@ -9,15 +9,18 @@ import {
   createDir,
 } from "@tauri-apps/api/fs";
 import { handleErr } from "./errorHandling";
+import { changeMcPath } from "./changeMcPath";
 import modpack from "../modpack.json";
 
-export let forgeExists = writable<boolean>(false);
-
+export const progress = writable<number>(0);
+export const forgeExists = writable<boolean>(false);
+export const minecraftPath = writable<string>("");
 export const osType: string = await type().catch(e => {
   handleErr("Failed to get OS type: ", e);
   return "";
 });
-export let minecraftPath = writable<string>("");
+
+const defaultMinecraftPath: string = await join(await dataDir(), ".minecraft");
 
 if (!(await exists("modinstaller", { dir: BaseDirectory.Data }))) {
   await createDir("modinstaller", { dir: BaseDirectory.Data });
@@ -30,26 +33,14 @@ export const checkForgeExists = async () => {
         modpack.forge
       }`}`
     )
-      .then(v => forgeExists.update(p => (p = v)))
+      .then(v => forgeExists.set(v))
       .catch(e => handleErr("Failed to check Forge:", e));
   } else forgeExists.update(() => false);
 };
 
-const defaultMinecraftPath: string = await join(
-  ".minecraft",
-  "launcher_profiles.json"
-);
+await changeMcPath(defaultMinecraftPath);
 
-await exists(defaultMinecraftPath, { dir: BaseDirectory.Data })
-  .then(async res => {
-    if (res) {
-      const path = await join(await dataDir(), ".minecraft");
-      minecraftPath.update(p => (p = path));
-      checkForgeExists();
-    }
-  })
-  .catch(e => handleErr("Error checking Minecraft path:", e));
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getLegacyJSON = async () => {
   const legacyPath: string = await join(
     get(minecraftPath),

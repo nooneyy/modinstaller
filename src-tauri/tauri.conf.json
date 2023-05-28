@@ -19,6 +19,7 @@
         "exists": true,
         "writeFile": true,
         "createDir": true,
+        "removeFile": true,
         "scope": [
           "$DATA/.minecraft/**",
           "$DATA/modinstaller",
@@ -85,7 +86,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self'"
     },
     "updater": {
       "active": false

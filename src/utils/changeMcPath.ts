@@ -4,20 +4,24 @@ import { handleErr } from "./errorHandling";
 import { minecraftPath, checkForgeExists } from "./prerequisites";
 import { open } from "@tauri-apps/api/dialog";
 
-export const changeMinecraftPath = async () => {
-  let path = (await open({
+export const changeMcPath = async (path: string) => {
+  const verifyPath = await join(path, "launcher_profiles.json");
+  await exists(verifyPath)
+    .then(res => {
+      minecraftPath.set(res ? path : "");
+      checkForgeExists();
+    })
+    .catch(e => handleErr("Error checking Minecraft path", e));
+};
+
+export const getMinecraftPath = async () => {
+  const path = (await open({
     defaultPath: await dataDir(),
     directory: true,
     multiple: false,
     recursive: true,
   })) as string;
   if (path) {
-    const verifyPath = await join(path, "launcher_profiles.json");
-    await exists(verifyPath)
-      .then(res => {
-        minecraftPath.update(p => (res ? (p = path) : ""));
-        checkForgeExists();
-      })
-      .catch(e => handleErr("Error checking Minecraft path", e));
+    await changeMcPath(path);
   }
 };
