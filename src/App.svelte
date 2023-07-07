@@ -6,9 +6,7 @@
 </script>
 
 <head />
-<main
-  class="flex-col flex h-screen subpixel-antialiased select-none"
-  class:dark={$dark}>
+<main class="flex-col flex h-screen antialiased select-none" class:dark={$dark}>
   <Header />
   <ModpackInfo />
   <Footer />
