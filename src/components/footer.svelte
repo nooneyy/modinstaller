@@ -5,7 +5,9 @@
 
 <div
   class="p-5 flex justify-center grow-0 dark:bg-zinc-800 dark:text-white transition-colors items-center space-x-3">
-  <p>Copyright © {new Date().getFullYear()} modinstaller Contributors. MIT</p>
+  <p>
+    Copyright © {new Date().getFullYear()} modinstaller Contributors. GNU GPLv3
+  </p>
   <button
     class="mr-4 border-2 rounded-xl p-2 hover:bg-zinc-300 dark:hover:bg-zinc-900 transition-colors"
     on:click={() => dark.update(v => !v)}
