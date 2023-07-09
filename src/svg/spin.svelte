@@ -1,5 +1,10 @@
+<script lang="ts">
+  let classes: string | undefined;
+  export { classes as class };
+</script>
+
 <svg
-  class="animate-spin h-5 w-5 mr-2 text-white"
+  class="animate-spin text-white {classes}"
   xmlns="http://www.w3.org/2000/svg"
   fill="none"
   viewBox="0 0 24 24">

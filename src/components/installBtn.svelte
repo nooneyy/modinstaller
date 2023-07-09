@@ -30,7 +30,7 @@
       <div
         class="flex justify-center items-center
       ">
-        <Spin />
+        <Spin class="h-5 w-5 mr-2" />
         Installing
       </div>
     {:else}
