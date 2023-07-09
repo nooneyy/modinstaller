@@ -49,7 +49,8 @@
             "cmd": "java",
             "args": true
           }
-        ]
+        ],
+        "open": true
       }
     },
     "bundle": {
