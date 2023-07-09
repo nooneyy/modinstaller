@@ -29,7 +29,7 @@ export const javaExists: Writable<boolean> = writable(false);
 new Command("java", "-version")
   .execute()
   .then(() => javaExists.set(true))
-  .catch(e => handleErr("", e));
+  .catch((e: string) => handleErr("", e));
 
 const downloadForgeCLIUtil = async () => {
   await fetch(`${forgeCLIURL}/latest`, { method: "GET" })
@@ -62,7 +62,7 @@ const downloadForgeCLIUtil = async () => {
               "User-Agent": "application/octet-stream",
               Accept: "application/octet-stream",
             }
-          ).catch(e => handleErr("Failed to download ForgeCLI:", e));
+          ).catch((e: string) => handleErr("Failed to download ForgeCLI:", e));
         } else {
           progress.update(n => n + (1 / 6) * 100);
         }
@@ -70,7 +70,7 @@ const downloadForgeCLIUtil = async () => {
         handleErr("No ForgeCLI asset found!");
       }
     })
-    .catch(e => handleErr("Unable to fetch ForgeCLI:", e));
+    .catch((e: string) => handleErr("Unable to fetch ForgeCLI:", e));
 };
 
 const downloadForgeJar = async () => {
@@ -82,7 +82,9 @@ const downloadForgeJar = async () => {
         n => n + (downloadProgress / totalDownloadSize) * (100 / 6)
       );
     }
-  ).catch(e => handleErr("Failed to download Forge installer jar:", e));
+  ).catch((e: string) =>
+    handleErr("Failed to download Forge installer jar:", e)
+  );
 };
 
 export const installForge = async () => {
@@ -97,19 +99,23 @@ export const installForge = async () => {
       "--target",
       get(minecraftPath),
     ]);
-    installCmd.stdout.on("data", v => console.log(`${v}\n`));
+    installCmd.stdout.on("data", (v: string) => console.log(`${v}\n`));
     await installCmd
       .execute()
       .then(async r => {
         if (r.code == 0) {
           progress.update(n => Math.round(n + (1 / 6) * 100));
-          await removeFile(forgeFile, { dir: BaseDirectory.Temp }).catch(e =>
-            handleErr("Failed to delete Forge installer jar after install!", e)
+          await removeFile(forgeFile, { dir: BaseDirectory.Temp }).catch(
+            (e: string) =>
+              handleErr(
+                "Failed to delete Forge installer jar after install!",
+                e
+              )
           );
           console.log("Successfully installed Forge!");
         } else handleErr("Error installing Forge: ", r.stderr);
       })
-      .catch(e => handleErr("Error installing Forge:", e));
+      .catch((e: string) => handleErr("Error installing Forge:", e));
     await checkForgeExists();
   } else progress.set(50);
 };

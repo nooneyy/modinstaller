@@ -12,16 +12,16 @@
 
 <div class="flex items-center mt-3 space-x-4">
   <button
-    on:click={() => {
+    on:click={async () => {
       installing = true;
-      installForge();
+      await installForge();
     }}
     disabled={!$javaExists || installing || $minecraftPath === ""}
     class={`${btnClasses} ${
       !$javaExists || $minecraftPath === ""
         ? "cursor-not-allowed opacity-70 bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700"
         : "bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 hover:dark:bg-blue-600"
-    } ${installing ? "cursor-not-allowed" : undefined}`}>
+    } ${installing ? "cursor-not-allowed" : ""}`}>
     {#if !$javaExists || $minecraftPath === ""}
       Can't Install: {!$javaExists
         ? "Java not found"

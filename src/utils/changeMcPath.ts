@@ -7,11 +7,11 @@ import { open } from "@tauri-apps/api/dialog";
 export const changeMcPath = async (path: string) => {
   const verifyPath = await join(path, "launcher_profiles.json");
   await exists(verifyPath)
-    .then(res => {
+    .then(async res => {
       minecraftPath.set(res ? path : "");
-      checkForgeExists();
+      await checkForgeExists();
     })
-    .catch(e => handleErr("Error checking Minecraft path", e));
+    .catch((e: string) => handleErr("Error checking Minecraft path", e));
 };
 
 export const getMinecraftPath = async () => {

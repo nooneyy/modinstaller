@@ -15,7 +15,7 @@ import modpack from "../modpack.json";
 export const progress = writable<number>(0);
 export const forgeExists = writable<boolean>(false);
 export const minecraftPath = writable<string>("");
-export const osType: string = await type().catch(e => {
+export const osType: string = await type().catch((e: string) => {
   handleErr("Failed to get OS type: ", e);
   return "";
 });
@@ -34,7 +34,7 @@ export const checkForgeExists = async () => {
       }`}`
     )
       .then(v => forgeExists.set(v))
-      .catch(e => handleErr("Failed to check Forge:", e));
+      .catch((e: string) => handleErr("Failed to check Forge:", e));
   } else forgeExists.update(() => false);
 };
 
@@ -57,6 +57,6 @@ const getLegacyJSON = async () => {
         async res =>
           await writeTextFile(legacyPath, JSON.stringify(res.data, null, 2), {})
       )
-      .catch(e => handleErr("Unable to fetch legacy.json:", e));
+      .catch((e: string) => handleErr("Unable to fetch legacy.json:", e));
   }
 };
